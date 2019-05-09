@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>考研倒计时</title>
+	<meta charset="utf-8">
+	<meta name="author" content="zzb" />
+	<meta name="keywords" content="考研倒计时" />
+	<embed src="那片花儿.mp3" hidden="true"></embed>
+	<style type="text/css">
+		/*边距是 10px，浏览器计算外边距*/
+		* {
+
+			margin: 5px auto;
+		}
+		/*背景颜色为黑色，边距是 10px，浏览器计算外边距*/
+		body{
+			background-color: black;
+			margin: 10px auto;
+		}
+		/*字体大小80px，居中*/
+		body div p{
+			font-size: 100px;
+			text-align: center;
+			color: green;
+			/*line-height: 62px;*/
+			/*z-index: 22;*/
+			margin-top: : 22px;
+		}
+	/*	#reset{
+			font-size: 80px;
+			text-align: center;
+			color: green;
+		}*/
+		/*字体大小60px， 居中*/
+		p{
+			text-align: center;
+			font-size: 60px;	
+			color: blue;
+		}
+		/*时间背景颜色*/
+		.time{
+			color: yellow;
+		}
+		/*时间背景颜色，字体大小120px*/
+		span{		
+			color: red;
+			font-size: 120px;
+		}
+		/*字体颜色，字体大小90px*/
+		ul,li{
+	        /*padding: 0;
+	        margin: 0;*/
+	        list-style: none;
+	        font-size: 90px;
+			text-align: center;
+			color: red;
+    }
+    /*设置文本框大小*/
+    #container{
+        width: 1250px;
+        height: 113px;
+        line-height: 95px; /* 设置行间的距离（行高）*/
+        margin: 20px auto;
+        overflow: hidden;   /*是当元素内的内容溢出的时候使它隐藏溢出的部分，即超出部分隐藏*/
+        border: 3px solid lightsteelblue;
+        border-radius: 5px;
+        white-space: nowrap;  /*规定段落中的文本不进行换行*/
+    }
+    #container ul{
+        display: inline-block;  /*用通俗的话讲，就是不独占一行的块级元素*/
+    }
+	</style>
+</head>
+<body>
+	<p>距离12月22号</p>
+	<!-- <div>
+		<p>全国硕士研究生入学考试</p>
+	</div> -->
+	<div id="container">
+	    <ul id="main">
+	    	<!-- 用js使文字左右移动 -->
+	        <li>全国硕士研究生入学考试</li>
+	        <!-- <marquee behavior="scroll">全国硕士研究生入学考试</marquee> -->
+	    </ul>
+	    <ul id="ext">
+	    	<!--  全国硕士研究生入学考试-->
+	    </ul>
+	</div>
+	<p>早上8：30开始答题</p>
+	<p>还有</p>
+	<p><span id="date"></span></p>
+	<script type="text/javascript">
+		var string = document.getElementById("date");
+		function fun(n){
+			return n > 0 && n < 10 ? '0' + n : '' + n;
+		}
+		function getDate(){
+
+
+			
+			var Odate = new Date();
+			var OldDate = Odate.getTime();//获取1970年1月1日的毫秒数
+			var NDate = new Date('2019/12/22 08:30:00');
+			var NewDate = NDate.getTime();//获取目标时间的毫秒数
+			var second = Math.floor((NewDate - OldDate)/1000);//获取相差时间的毫秒数
+
+			var day = Math.floor(second / 86400);//24*60*60
+			second = second % 86400;
+			var hour = Math.floor(second / 3600);
+			second = second % 3600;
+			var minute = Math.floor(second / 60);
+			second = second % 60;
+
+			var str = fun(day) + '<span class = "time">天</span>'
+					+fun(hour)  + '<span class = "time">小时</span>'
+					+fun(minute)  + '<span class = "time">分</span>'
+					+fun(second)  + '<span class = "time">秒</span>';
+
+			string.innerHTML = str;
+
+		}
+		getDate();
+		setInterval(getDate,1000);
+
+	    var container = document.getElementById('container'),
+	        main = document.getElementById('main'),
+	        ext = document.getElementById('ext');
+
+        // innerHTML获取对象的内容 
+	    ext.innerHTML = main.innerHTML;
+	    // 在框内让文字从左到右移动
+	    function move() {
+	    	// 元素会从scrollLeft的位置显示该元素的内容
+	        container.scrollLeft++;
+	        //当元素要显示main的内容时，让他去显示ext的内容，因为main与ext的内容一样，就实现了滚动，因为速度太快了，所以你就堪称他是连续的了
+	        if (container.scrollLeft >= main.scrollWidth) {
+	            container.scrollLeft = 0;
+	        }
+	    }
+	    
+	    // move在定时时间到时要执行的JavaScript代码串
+	   	// 30是设定的定时时间，用毫秒数表示
+	    
+	    var timer = window.setInterval(move,100);
+	    /*container.onmouseover = function(){
+	        window.clearInterval(timer);
+	    }
+	    container.onmouseout = function(){
+	        timer = window.setInterval(move,100);
+	    }*/
+	    /* 第二种方式实现从左到右移动
+	     	if(ext.offsetWidth-container.scrollLeft<=0){
+	    		container.scrollLeft-=main.offsetWidth;
+	    	}
+	    	else{
+	    		container.scrollLeft++;
+	    	}
+	    
+	     */
+
+		/*function reset(){
+			window.location.reload();
+
+		}
+		setTimeout('reset()',3000);
+		*/
+	</script>
+	<div>
+		<p><marquee behavior="scroll">让坚持成为一种信仰。</marquee></p>
+		
+	</div>
+	
+	<!-- <div>
+		<button id="reset" onclick="reset()">重置</button>
+	</div> -->
+</body>
+</html>
